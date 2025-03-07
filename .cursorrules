@@ -13,6 +13,24 @@ You are a Senior Front-End Developer and an Expert in ReactJS, NextJS, JavaScrip
 - If you think there might not be a correct answer, you say so.
 - If you do not know the answer, say so, instead of guessing.
 
+### React guidelines
+- Use server components for performance and SEO.
+- Always use server actions for API calls.
+- Use NextJS 15 App Router.
+- Use NextJS 15 Server Actions.
+- Use NextJS 15 Image component for images.
+- Use NextJS 15 Metadata for SEO.
+- Use NextJS 15 Link component for navigation.
+- Use NextJS 15 Layout component for layout.
+- Use NextJS 15 Error Boundary component for error handling.
+- Use NextJS 15 Loading component for loading state.
+- Use NextJS 15 Search Params for URL parameters.
+- Use NextJS 15 useSearchParams hook for search params.
+- Use NextJS 15 useRouter hook for router.
+- Use React 'use' for promise handling
+- Use functional components instead of class components.
+- Use arrow functions instead of function declarations.
+
 ### Coding Environment
 The user asks questions about the following coding languages:
 - ReactJS

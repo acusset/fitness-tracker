@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <!-- Rounded square background -->
+  <rect width="1000" height="1000" rx="200" ry="200" fill="#26B0B0" />
+  
+  <!-- Top dot -->
+  <circle cx="500" cy="175" r="65" fill="white" />
+  
+  <!-- Second row dots -->
+  <circle cx="350" cy="325" r="65" fill="white" />
+  <circle cx="500" cy="325" r="65" fill="white" />
+  <circle cx="650" cy="325" r="65" fill="white" />
+  
+  <!-- Third row dots -->
+  <circle cx="175" cy="500" r="65" fill="white" />
+  <circle cx="325" cy="500" r="65" fill="white" />
+  <circle cx="500" cy="500" r="75" fill="white" />
+  <circle cx="675" cy="500" r="85" fill="white" />
+  <circle cx="850" cy="500" r="95" fill="white" />
+  
+  <!-- Fourth row dots -->
+  <circle cx="350" cy="675" r="65" fill="white" />
+  <circle cx="500" cy="675" r="75" fill="white" />
+  <circle cx="650" cy="675" r="85" fill="white" />
+  
+  <!-- Bottom dot -->
+  <circle cx="500" cy="825" r="65" fill="white" />
+</svg>
