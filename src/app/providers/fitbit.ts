@@ -1,5 +1,8 @@
 import type { OAuthConfig, OAuthUserConfig } from "next-auth/providers";
 
+/**
+ * https://dev.fitbit.com/build/reference/web-api/developer-guide/application-design/#Data-Types
+ */
 export interface FitbitProfile {
   user: {
     aboutMe?: string;
@@ -104,14 +107,11 @@ export default function Fitbit(
     userinfo: {
       url: `${apiBaseUrl}/1/user/-/profile.json`,
     },
-    profile: async (profile, tokens) => {
-      return {
-        id: `${tokens.user_id}`,
-        encodedId: profile.user.encodedId,
-        name: profile.user.fullName,
-        image: profile.user.avatar,
-      };
-    },
+    profile: (profile) => ({
+      id: profile.user.encodedId,
+      name: profile.user.fullName,
+      image: profile.user.avatar,
+    }),
     style: {
       bg: "#00B0B9",
       text: "#fff",
