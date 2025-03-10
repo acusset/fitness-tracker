@@ -63,7 +63,7 @@ export const getActivityTimeSeries = async ({
   accessToken: string;
   startDate: string;
   endDate: string;
-}): Promise<ActivityTimeSeriesDataPoint> => {
+}): Promise<ActivityTimeSeriesDataPoint[]> => {
   const baseUrl = "https://api.fitbit.com/1";
   const resourcePath = "steps";
   const userId = "-";
