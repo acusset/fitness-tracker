@@ -54,7 +54,7 @@ export default function MonthlyProgress({
               <span className="text-foreground font-medium">{averageStepsPerDay.toLocaleString()}</span> avg steps per day
             </div>
             <div>
-              <span className="text-foreground font-medium">{calculateAverageToDate(data)}</span> avg steps to date
+              <span className="text-foreground font-medium">{calculateAverageToDate(data, month).toLocaleString()}</span> avg steps to date
             </div>
           </div>
         </div>
