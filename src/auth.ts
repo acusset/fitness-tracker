@@ -1,11 +1,17 @@
+import Google from "@auth/core/providers/google";
 import NextAuth, { DefaultSession } from "next-auth";
-import Fitbit from "./app/providers/fitbit";
+import Fitbit from "./lib/fitbit/provider";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       fitbit?: {
+        accessToken: string;
+        refreshToken: string;
+        expiresAt?: number;
+      };
+      google?: {
         accessToken: string;
         refreshToken: string;
         expiresAt?: number;
@@ -19,14 +25,23 @@ declare module "next-auth" {
       refreshToken: string;
       expiresAt?: number;
     };
+    google?: {
+      accessToken: string;
+      refreshToken: string;
+      expiresAt?: number;
+    };
   }
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    Fitbit({
-      clientId: process.env.AUTH_FITBIT_CLIENT_ID!,
-      clientSecret: process.env.AUTH_FITBIT_CLIENT_SECRET!,
+    Fitbit,
+    Google({
+      authorization: {
+        params: {
+          scope: "https://www.googleapis.com/auth/fitness.activity.read openid",
+        },
+      },
     }),
   ],
   session: {
@@ -43,12 +58,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             expiresAt: account.expires_at,
           };
         }
+        if (account.provider === "google") {
+          token.google = {
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            expiresAt: account.expires_at,
+          };
+        }
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.sub!;
       session.user.fitbit = token.fitbit;
+      session.user.google = token.google;
       return session;
     },
   },

@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { ActivityTimeSeriesDataPoint } from "@/lib/fitbit/fitbitClient"
+import { ActivityTimeSeriesDataPoint, calculateAverageToDate } from "@/lib/fitbit/fitbitClient"
 
 interface MonthlyProgressProps {
   data: ActivityTimeSeriesDataPoint[]
@@ -52,6 +52,9 @@ export default function MonthlyProgress({
             </div>
             <div>
               <span className="text-foreground font-medium">{averageStepsPerDay.toLocaleString()}</span> avg steps per day
+            </div>
+            <div>
+              <span className="text-foreground font-medium">{calculateAverageToDate(data)}</span> avg steps to date
             </div>
           </div>
         </div>
