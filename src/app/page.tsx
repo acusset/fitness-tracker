@@ -3,7 +3,7 @@ import LoginButton from '@/components/auth/LoginButton';
 import LogoutButton from '@/components/auth/LogoutButton';
 import MonthlyProgress from '@/components/monthly-progress';
 import { getFebuaryActivityTimeSeries, getMarchActivityTimeSeries } from '@/lib/fitbit/fitbitClient';
-import { getFebruaryActivityTimeSeries as getStravaFebruarySteps, getMarchActivityTimeSeries as getStravaMarchSteps } from '@/lib/fitbit/strava/stravaClient';
+import { getFebruaryActivityTimeSeries as getStravaFebruarySteps, getMarchActivityTimeSeries as getStravaMarchSteps } from '@/lib/strava/stravaClient';
 import { getFebruarySteps, getMarchSteps } from '@/lib/googleFit/googleFitClient';
 import { redirect } from 'next/navigation';
 import { Suspense, use } from 'react';
