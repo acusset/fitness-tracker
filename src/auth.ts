@@ -1,5 +1,6 @@
 import Google from "@auth/core/providers/google";
 import NextAuth, { DefaultSession } from "next-auth";
+import Strava from "next-auth/providers/strava";
 import Fitbit from "./lib/fitbit/provider";
 
 declare module "next-auth" {
@@ -12,6 +13,11 @@ declare module "next-auth" {
         expiresAt?: number;
       };
       google?: {
+        accessToken: string;
+        refreshToken: string;
+        expiresAt?: number;
+      };
+      strava?: {
         accessToken: string;
         refreshToken: string;
         expiresAt?: number;
@@ -30,12 +36,24 @@ declare module "next-auth" {
       refreshToken: string;
       expiresAt?: number;
     };
+    strava?: {
+      accessToken: string;
+      refreshToken: string;
+      expiresAt?: number;
+    };
   }
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Fitbit,
+    Strava({
+      authorization: {
+        params: {
+          scope: "read,activity:read_all",
+        },
+      },
+    }),
     Google({
       authorization: {
         params: {
@@ -65,6 +83,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             expiresAt: account.expires_at,
           };
         }
+        if (account.provider === "strava") {
+          token.strava = {
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            expiresAt: account.expires_at,
+          };
+        }
       }
       return token;
     },
@@ -72,6 +97,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.id = token.sub!;
       session.user.fitbit = token.fitbit;
       session.user.google = token.google;
+      session.user.strava = token.strava;
       return session;
     },
   },
