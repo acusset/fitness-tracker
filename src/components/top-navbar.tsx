@@ -1,10 +1,11 @@
 "use client"
 
-import Link from "next/link"
 import { Settings } from "lucide-react"
+import Link from "next/link"
 import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +14,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
 
 // Mock user data - in a real app, this would come from authentication
 const currentUser = {
