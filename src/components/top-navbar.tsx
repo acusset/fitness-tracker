@@ -1,8 +1,8 @@
 "use client"
 
-import { Settings } from "lucide-react"
-import Link from "next/link"
+import { LogOut, Settings, Trophy, User } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -32,7 +32,13 @@ export function TopNavbar() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <Link href="/settings" className="mr-2">
+            <Button variant="ghost" size="icon">
+              <Trophy className="h-5 w-5" />
+              <span className="sr-only">Ranking</span>
+            </Button>
+          </Link>
           <Link href="/settings" className="mr-2">
             <Button variant="ghost" size="icon">
               <Settings className="h-5 w-5" />
@@ -40,8 +46,8 @@ export function TopNavbar() {
             </Button>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <span className="hidden text-sm font-medium md:inline-block">{currentUser.name}</span>
+          <div className="flex">
+            {/* <span className="hidden text-sm font-medium md:inline-block">{currentUser.name}</span> */}
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -60,7 +66,14 @@ export function TopNavbar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <User className="h-5 w-5" />
+                      Profile
+                    </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogOut className="h-5 w-5" />
+                      Log out
+                    </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
