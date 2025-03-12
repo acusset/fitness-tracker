@@ -301,7 +301,6 @@ export default function CompanyDashboard() {
 
   return (
     <div className="container mx-auto py-4">
-      {/* Changed from py-6 to py-4 since we now have the navbar taking up space */}
       <div className="flex flex-col space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Company Dashboard</h1>

@@ -1,26 +1,26 @@
 import { auth } from '@/auth';
-import LoginButton from '@/components/auth/LoginButton';
-import LogoutButton from '@/components/auth/LogoutButton';
 import MonthlyProgress from '@/components/monthly-progress';
 import { getFebuaryActivityTimeSeries, getMarchActivityTimeSeries } from '@/lib/fitbit/fitbitClient';
 import { getFebruaryActivityTimeSeries as getStravaFebruarySteps, getMarchActivityTimeSeries as getStravaMarchSteps } from '@/lib/strava/stravaClient';
 import { getFebruarySteps, getMarchSteps } from '@/lib/googleFit/googleFitClient';
 import { redirect } from 'next/navigation';
 import { Suspense, use } from 'react';
+import { LogoutButton } from '@/components/auth/login-button';
+import { LoginButton } from '@/components/auth/logout-button';
 
-export default function Home() {
-  const session = use(auth());
+export default async function Home() {
+  const session = await auth();
 
   if (!session || !session.user) {
     redirect('/api/auth/signin');
   }
 
   const { user } = session;
-  const fitbitAccessToken = session.user.fitbit?.accessToken;
-  const googleAccessToken = session.user.google?.accessToken;
-  const stravaAccessToken = session.user.strava?.accessToken;
+  const fitbitAccessToken = session.user.providers.fitbit?.accessToken;
+  const googleAccessToken = session.user.providers.google?.accessToken;
+  const stravaAccessToken = session.user.providers.strava?.accessToken;
   
-  if (fitbitAccessToken && session.user.fitbit?.expiresAt && session.user.fitbit?.expiresAt < Date.now()) {
+  if (fitbitAccessToken && session.user.providers.fitbit?.expiresAt && session.user.providers .fitbit?.expiresAt < Date.now()) {
     const activitiesSteps = use(getFebuaryActivityTimeSeries(fitbitAccessToken));
     const marchSteps = use(getMarchActivityTimeSeries(fitbitAccessToken));
   
@@ -33,7 +33,7 @@ export default function Home() {
         {user ? <LogoutButton /> : <LoginButton />}
       </Suspense>
     </main>)
-  } else if (googleAccessToken && session.user.google?.expiresAt && session.user.google?.expiresAt < Date.now()) {
+  } else if (googleAccessToken && session.user.providers.google?.expiresAt && session.user.providers.google?.expiresAt < Date.now()) {
     const febSteps = use(getFebruarySteps(googleAccessToken));
     const marchSteps = use(getMarchSteps(googleAccessToken));
     
@@ -46,7 +46,7 @@ export default function Home() {
         {user ? <LogoutButton /> : <LoginButton />}
       </Suspense>
     </main>)
-  } else if (stravaAccessToken && session.user.strava?.expiresAt && session.user.strava?.expiresAt < Date.now()) {
+  } else if (stravaAccessToken && session.user.providers.strava?.expiresAt && session.user.providers.strava?.expiresAt < Date.now()) {
     const febSteps = use(getStravaFebruarySteps(stravaAccessToken));
     const marchSteps = use(getStravaMarchSteps(stravaAccessToken));
     

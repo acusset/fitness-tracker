@@ -68,12 +68,12 @@ export function TopNavbar() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <User className="h-5 w-5" />
-                      Profile
-                    </DropdownMenuItem>
+                  Profile
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <LogOut className="h-5 w-5" />
-                      Log out
-                    </DropdownMenuItem>
+                  Log out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

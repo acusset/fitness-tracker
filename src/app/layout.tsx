@@ -21,7 +21,11 @@ export default function RootLayout({
       <body className={inter.className}>
           <div className="relative min-h-screen flex flex-col">
             <TopNavbar />
-            <main className="flex-1">{children}</main>
+          <div className="container mx-auto py-4">
+            <main className="flex-1">
+              {children}
+            </main>
+            </div>  
           </div>
       </body>
     </html>
