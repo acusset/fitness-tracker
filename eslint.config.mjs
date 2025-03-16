@@ -1,13 +1,15 @@
 import pluginJs from '@eslint/js';
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';
+import pluginImport from 'eslint-plugin-import';
+import pluginPrettier from 'eslint-plugin-prettier/recommended';
+import pluginReactConfig from 'eslint-plugin-react';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
 
 export default [
+  { plugins: { pluginReactConfig } },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReactConfig,
+  pluginImport.flatConfigs.recommended,
+  pluginPrettier,
   {
     rules: {
       semi: ['error', 'always'],
@@ -15,6 +17,11 @@ export default [
       'no-multiple-empty-lines': ['error'],
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'no-magic-numbers': ['error'],
+      'no-console': ['error'],
+      'no-trailing-spaces': ['error'],
+      'import/order': ['error'],
+      'import/no-duplicates': ['error'],
+      'prettier/prettier': ['error'],
     },
   },
 ];
