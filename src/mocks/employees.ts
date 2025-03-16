@@ -1,10 +1,10 @@
-import { REWARD_TIERS } from "@/types";
+import { REWARD_TIERS } from '@/types';
 
 export const employees = [
   {
     id: 1,
-    name: "Alex Johnson",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Alex Johnson',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.DIAMOND,
     activities: {
       steps: 150000,
@@ -15,8 +15,8 @@ export const employees = [
   },
   {
     id: 2,
-    name: "Sam Wilson",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Sam Wilson',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.GOLD,
     activities: {
       steps: 110000,
@@ -27,8 +27,8 @@ export const employees = [
   },
   {
     id: 3,
-    name: "Taylor Smith",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Taylor Smith',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.SILVER,
     activities: {
       steps: 85000,
@@ -39,8 +39,8 @@ export const employees = [
   },
   {
     id: 4,
-    name: "Jordan Lee",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Jordan Lee',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.BRONZE,
     activities: {
       steps: 65000,
@@ -51,8 +51,8 @@ export const employees = [
   },
   {
     id: 5,
-    name: "Casey Brown",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Casey Brown',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.DIAMOND,
     activities: {
       steps: 140000,
@@ -63,8 +63,8 @@ export const employees = [
   },
   {
     id: 6,
-    name: "Morgan Davis",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Morgan Davis',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.GOLD,
     activities: {
       steps: 95000,
@@ -75,8 +75,8 @@ export const employees = [
   },
   {
     id: 7,
-    name: "Riley Martinez",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Riley Martinez',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.SILVER,
     activities: {
       steps: 78000,
@@ -87,8 +87,8 @@ export const employees = [
   },
   {
     id: 8,
-    name: "Jamie Rodriguez",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Jamie Rodriguez',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.BRONZE,
     activities: {
       steps: 60000,
@@ -99,8 +99,8 @@ export const employees = [
   },
   {
     id: 9,
-    name: "Quinn Thompson",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Quinn Thompson',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.DIAMOND,
     activities: {
       steps: 135000,
@@ -111,8 +111,8 @@ export const employees = [
   },
   {
     id: 10,
-    name: "Avery Garcia",
-    avatar: "/placeholder.svg?height=40&width=40",
+    name: 'Avery Garcia',
+    avatar: '/placeholder.svg?height=40&width=40',
     rewardTier: REWARD_TIERS.GOLD,
     activities: {
       steps: 105000,

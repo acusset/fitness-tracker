@@ -1,4 +1,4 @@
-import type { OAuthConfig, OAuthUserConfig } from "next-auth/providers";
+import type { OAuthConfig, OAuthUserConfig } from 'next-auth/providers';
 
 /**
  * https://dev.fitbit.com/build/reference/web-api/developer-guide/application-design/#Data-Types
@@ -15,20 +15,20 @@ export interface FitbitProfile {
     averageDailySteps: number;
     challengesBeta: boolean;
     city?: string;
-    clockTimeDisplayFormat: "12hour" | "24hour";
+    clockTimeDisplayFormat: '12hour' | '24hour';
     country?: string;
     corporate: boolean;
     corporateAdmin: boolean;
     dateOfBirth: string;
     displayName: string;
-    displayNameSetting: "name" | "username";
+    displayNameSetting: 'name' | 'username';
     distanceUnit: string;
     encodedId: string;
     features: { exerciseGoal: boolean };
     firstName: string;
     foodsLocale?: string;
     fullName: string;
-    gender: "MALE" | "FEMALE" | "NA";
+    gender: 'MALE' | 'FEMALE' | 'NA';
     glucoseUnit: string;
     height: number;
     heightUnit: string;
@@ -44,13 +44,13 @@ export interface FitbitProfile {
     offsetFromUTCMillis: number;
     phoneNumber?: string;
     sdkDeveloper: boolean;
-    sleepTracking: "Normal" | "Sensitive";
-    startDayOfWeek: "SUNDAY" | "MONDAY";
+    sleepTracking: 'Normal' | 'Sensitive';
+    startDayOfWeek: 'SUNDAY' | 'MONDAY';
     state?: string;
     strideLengthRunning: number;
-    strideLengthRunningType: "default" | "manual";
+    strideLengthRunningType: 'default' | 'manual';
     strideLengthWalking: number;
-    strideLengthWalkingType: "default" | "manual";
+    strideLengthWalkingType: 'default' | 'manual';
     swimUnit: string;
     temperatureUnit: string;
     timezone: string;
@@ -88,20 +88,18 @@ interface FitbitUserBadge {
   value: number;
 }
 
-export default function Fitbit(
-  config: OAuthUserConfig<FitbitProfile>
-): OAuthConfig<FitbitProfile> {
-  const baseUrl = "https://www.fitbit.com";
-  const apiBaseUrl = "https://api.fitbit.com";
-  const defaultScopes = ["activity", "profile"];
+export default function Fitbit(config: OAuthUserConfig<FitbitProfile>): OAuthConfig<FitbitProfile> {
+  const baseUrl = 'https://www.fitbit.com';
+  const apiBaseUrl = 'https://api.fitbit.com';
+  const defaultScopes = ['activity', 'profile'];
 
   return {
-    id: "fitbit",
-    name: "Fitbit",
-    type: "oauth",
+    id: 'fitbit',
+    name: 'Fitbit',
+    type: 'oauth',
     authorization: {
       url: `${baseUrl}/oauth2/authorize`,
-      params: { scope: defaultScopes.join(" ") },
+      params: { scope: defaultScopes.join(' ') },
     },
     token: `${apiBaseUrl}/oauth2/token`,
     userinfo: {
@@ -113,8 +111,8 @@ export default function Fitbit(
       image: profile.user.avatar,
     }),
     style: {
-      bg: "#00B0B9",
-      text: "#fff",
+      bg: '#00B0B9',
+      text: '#fff',
     },
     options: config,
   };

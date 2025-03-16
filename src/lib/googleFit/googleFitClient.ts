@@ -1,5 +1,5 @@
-import google from "googleapis";
-import { ActivityTimeSeriesDataPoint } from "../fitbit/fitbitClient";
+import google from 'googleapis';
+import { ActivityTimeSeriesDataPoint } from '../fitbit/fitbitClient';
 
 interface ActivityTimeSeriesParams {
   accessToken: string;
@@ -13,7 +13,7 @@ async function getStepsForDateRange(
 ): Promise<ActivityTimeSeriesDataPoint[]> {
   const { accessToken, startDate, endDate } = params;
   if (new Date(endDate) < new Date(startDate)) {
-    throw new Error("End date must be after start date");
+    throw new Error('End date must be after start date');
   }
 
   const oauth2Client = new google.Auth.OAuth2Client();
@@ -24,19 +24,19 @@ async function getStepsForDateRange(
   });
 
   const request: google.fitness_v1.Params$Resource$Users$Dataset$Aggregate = {
-    userId: "me",
+    userId: 'me',
     requestBody: {
       aggregateBy: [
         {
-          dataTypeName: "com.google.step_count.delta",
+          dataTypeName: 'com.google.step_count.delta',
           dataSourceId:
-            "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
+            'derived:com.google.step_count.delta:com.google.android.gms:estimated_steps',
         },
       ],
       startTimeMillis: new Date(startDate).getTime().toString(),
       endTimeMillis: new Date(endDate).getTime().toString(),
       bucketByTime: {
-        durationMillis: "86400000", // 1 day in milliseconds
+        durationMillis: '86400000', // 1 day in milliseconds
       },
     },
   };
@@ -52,15 +52,13 @@ async function getStepsForDateRange(
 
     return steps;
   } catch (error) {
-    console.error("Error retrieving step data:", error);
+    console.error('Error retrieving step data:', error);
     throw error;
   }
 }
 
 // Function to get step count for February of the current year
-export const getFebruarySteps = (
-  accessToken: string
-): Promise<ActivityTimeSeriesDataPoint[]> => {
+export const getFebruarySteps = (accessToken: string): Promise<ActivityTimeSeriesDataPoint[]> => {
   const year = new Date().getFullYear();
   return getStepsForDateRange({
     accessToken,
@@ -70,9 +68,7 @@ export const getFebruarySteps = (
 };
 
 // Function to get step count for March of the current year
-export const getMarchSteps = (
-  accessToken: string
-): Promise<ActivityTimeSeriesDataPoint[]> => {
+export const getMarchSteps = (accessToken: string): Promise<ActivityTimeSeriesDataPoint[]> => {
   const year = new Date().getFullYear();
   return getStepsForDateRange({
     accessToken,
@@ -82,12 +78,12 @@ export const getMarchSteps = (
 };
 
 export const mapGoogleFitSteps = (
-    day: google.fitness_v1.Schema$AggregateBucket
+  day: google.fitness_v1.Schema$AggregateBucket
 ): ActivityTimeSeriesDataPoint => {
-    return {
-        dateTime: day.startTimeMillis || '',
-        value: String(day.dataset?.[0]?.point?.[0]?.value?.[0]?.intVal || 0)
-    };
+  return {
+    dateTime: day.startTimeMillis || '',
+    value: String(day.dataset?.[0]?.point?.[0]?.value?.[0]?.intVal || 0),
+  };
 };
 
 // Export the base function for custom date ranges

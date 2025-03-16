@@ -1,20 +1,20 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 // Define the step data type
 interface StepData {
-  dateTime: string // format: yyyy-MM-dd
-  value: string
+  dateTime: string; // format: yyyy-MM-dd
+  value: string;
 }
 
 interface DailyStepsChartProps {
-  data: StepData[]
-  month?: number // 0-11, defaults to January (0)
-  year?: number // defaults to current year
+  data: StepData[];
+  month?: number; // 0-11, defaults to January (0)
+  year?: number; // defaults to current year
 }
 
 export default function DailyStepsChart({
@@ -24,35 +24,37 @@ export default function DailyStepsChart({
 }: DailyStepsChartProps) {
   // Filter data for the specified month and year
   const filteredData = data.filter((item) => {
-    const itemDate = new Date(item.dateTime)
-    return itemDate.getMonth() === month && itemDate.getFullYear() === year
-  })
+    const itemDate = new Date(item.dateTime);
+    return itemDate.getMonth() === month && itemDate.getFullYear() === year;
+  });
 
   // Sort data by date
-  const sortedData = [...filteredData].sort((a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime())
+  const sortedData = [...filteredData].sort(
+    (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
+  );
 
   // Transform data for the chart
   const chartData = sortedData.map((item) => {
-    const steps = Number.parseInt(item.value, 10)
-    const date = new Date(item.dateTime)
-    const day = date.getDate()
-    const percentage = Math.min(Math.round((steps / 12000) * 100), 100)
+    const steps = Number.parseInt(item.value, 10);
+    const date = new Date(item.dateTime);
+    const day = date.getDate();
+    const percentage = Math.min(Math.round((steps / 12000) * 100), 100);
 
     return {
       day,
       date: item.dateTime,
       steps,
       percentage,
-      formattedDate: `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`,
-    }
-  })
+      formattedDate: `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}`,
+    };
+  });
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Daily Steps</CardTitle>
         <CardDescription>
-          {new Date(year, month).toLocaleString("default", { month: "long" })} {year}
+          {new Date(year, month).toLocaleString('default', { month: 'long' })} {year}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -60,24 +62,29 @@ export default function DailyStepsChart({
           <ChartContainer
             config={{
               steps: {
-                label: "Steps",
-                color: "hsl(var(--chart-1))",
+                label: 'Steps',
+                color: 'hsl(var(--chart-1))',
               },
             }}
           >
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
-              <YAxis tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => `${value / 1000}k`} />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => `${value / 1000}k`}
+              />
               <ChartTooltip
                 content={
                   <ChartTooltipContent
                     labelFormatter={(value, item) => {
                       if (item && item[0]) {
-                        const dataItem = item[0].payload
-                        return dataItem.formattedDate
+                        const dataItem = item[0].payload;
+                        return dataItem.formattedDate;
                       }
-                      return value
+                      return value;
                     }}
                   />
                 }
@@ -103,6 +110,5 @@ export default function DailyStepsChart({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-
