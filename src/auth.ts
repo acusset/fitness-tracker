@@ -1,4 +1,5 @@
 import Google from "@auth/core/providers/google";
+import { SupabaseAdapter } from "@auth/supabase-adapter";
 import NextAuth from "next-auth";
 import Strava from "next-auth/providers/strava";
 import Fitbit from "./lib/fitbit/provider";
@@ -22,32 +23,13 @@ export const providers = [
 ];
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  debug: process.env.DEBUG === "true",
   providers,
   session: {
-    strategy: "jwt",
+    strategy: "database",
   },
-  callbacks: {
-    jwt: async ({ token, account }) => {
-      if (!account) return token;
-
-      return {
-        ...token,
-        providers: {
-          ...(token.providers || {}),
-          [account.provider.toLowerCase()]: {
-            accessToken: account.access_token,
-            refreshToken: account.refresh_token,
-            expiresAt: account.expires_at,
-          },
-        },
-      };
-    },
-    session: async ({ session, token }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        providers: token.providers,
-      },
-    }),
-  },
+  adapter: SupabaseAdapter({
+    url: process.env.SUPABASE_URL || "",
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
+  }),
 });

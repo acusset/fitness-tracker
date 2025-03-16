@@ -1,6 +1,8 @@
 import { DefaultSession } from "@auth/core/types";
 import "next-auth/jwt";
-ce Session {
+
+declare module "next-auth" {
+  interface Session {
     user: {
       id: string;
       providers: Record<

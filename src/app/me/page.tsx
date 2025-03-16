@@ -14,8 +14,8 @@ export default async function Home() {
   if (!session || !session.user) {
     redirect('/api/auth/signin');
   }
-
   const { user } = session;
+
   const fitbitAccessToken = session.user.providers.fitbit?.accessToken;
   const googleAccessToken = session.user.providers.google?.accessToken;
   const stravaAccessToken = session.user.providers.strava?.accessToken;
