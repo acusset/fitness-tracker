@@ -1,39 +1,14 @@
-import pluginJs from "@eslint/js";
-import pluginImport from "eslint-plugin-import";
-import pluginReactConfig from "eslint-plugin-react";
 import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
 
-const INDENTATION = 2;
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
-  { files: ["**/*.ts", "**/*.tsx"] },
-  { plugins: { pluginReactConfig } },
-  { languageOptions: { globals: globals.browser } },
+  {files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"]},
+  {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
-  pluginImport.flatConfigs.recommended,
-  {
-    files: [
-      "*.ts",
-      "*.tsx",
-      "**/*.js",
-      "**/*.jsx",
-      "**/*.mjs",
-      "**/*.mjsx",
-      "**/*.cjs",
-      "**/*.cjsx",
-      "*.json",
-    ],
-    rules: {
-      semi: ["error", "always"],
-      quotes: ["error", "single"],
-      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0 }],
-      "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-      "no-magic-numbers": ["error"],
-      "no-console": ["error"],
-      "no-trailing-spaces": ["error"],
-      "import/order": ["error"],
-      "import/no-duplicates": ["error"],
-      indent: ["error", INDENTATION],
-    },
-  },
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
 ];
