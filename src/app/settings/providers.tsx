@@ -1,6 +1,6 @@
 import { auth, providers } from "@/auth";
 import { LoginButton } from "@/components/auth/login-button";
-import { supabase } from "@/supabase";
+import { getUserConnectedAccounts } from "@/repositories/user-repository";
 import { Suspense, use } from "react";
 
 /**
@@ -16,16 +16,9 @@ export async function getUserAccounts() {
     throw new Error("Not authenticated");
   }
 
-  const { data, error } = await supabase
-    .from("accounts")
-    .select("*")
-    .eq("userId", session.user.id);
+  const accounts = await getUserConnectedAccounts(session.user.id);
 
-  if (error) {
-    throw error;
-  }
-
-  return { accounts: data };
+  return { accounts };
 }
 
 export default function Providers() {
