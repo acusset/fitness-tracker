@@ -1,8 +1,17 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { ActivityTimeSeriesDataPoint, calculateAverageToDate } from '@/lib/fitbit/fitbitClient';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import {
+  ActivityTimeSeriesDataPoint,
+  calculateAverageToDate,
+} from "@/lib/fitbit/fitbitClient";
 
 interface MonthlyProgressProps {
   data: ActivityTimeSeriesDataPoint[];
@@ -22,7 +31,10 @@ export default function MonthlyProgress({
   const targetSteps = 12000 * daysInMonth;
 
   // Calculate the total steps for the month
-  const totalSteps = data.reduce((sum, item) => sum + Number.parseInt(item.value, 10), 0);
+  const totalSteps = data.reduce(
+    (sum, item) => sum + Number.parseInt(item.value, 10),
+    0,
+  );
 
   const percentage = Math.round((totalSteps / targetSteps) * 100);
 
@@ -33,7 +45,8 @@ export default function MonthlyProgress({
       <CardHeader>
         <CardTitle>Step Progress</CardTitle>
         <CardDescription>
-          {new Date(year, month).toLocaleString('default', { month: 'long' })} {year}
+          {new Date(year, month).toLocaleString("default", { month: "long" })}{" "}
+          {year}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -41,27 +54,32 @@ export default function MonthlyProgress({
           <Progress value={percentage} className="h-2" />
           <div className="flex justify-between text-sm text-muted-foreground">
             <div>
-              <span className="font-medium text-foreground">{totalSteps.toLocaleString()}</span>{' '}
+              <span className="font-medium text-foreground">
+                {totalSteps.toLocaleString()}
+              </span>{" "}
               steps
             </div>
             <div>
-              Target:{' '}
-              <span className="font-medium text-foreground">{targetSteps.toLocaleString()}</span>{' '}
+              Target:{" "}
+              <span className="font-medium text-foreground">
+                {targetSteps.toLocaleString()}
+              </span>{" "}
               steps
             </div>
             <div>
-              <span className="font-medium text-foreground">{percentage}%</span> complete
+              <span className="font-medium text-foreground">{percentage}%</span>{" "}
+              complete
             </div>
             <div>
               <span className="font-medium text-foreground">
                 {averageStepsPerDay.toLocaleString()}
-              </span>{' '}
+              </span>{" "}
               avg steps per day
             </div>
             <div>
               <span className="font-medium text-foreground">
                 {calculateAverageToDate(data, month).toLocaleString()}
-              </span>{' '}
+              </span>{" "}
               avg steps to date
             </div>
           </div>

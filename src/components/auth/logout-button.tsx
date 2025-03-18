@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { signOut } from '@/auth';
-import { ReactNode } from 'react';
-import { Button } from '../ui/button';
+import { signOut } from "@/auth";
+import { ReactNode } from "react";
+import { Button } from "../ui/button";
 
 interface LogoutButtonProps {
   children?: ReactNode;

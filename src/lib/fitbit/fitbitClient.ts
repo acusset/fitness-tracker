@@ -6,7 +6,7 @@ export interface ActivityTimeSeriesDataPoint {
 
 export const calculateAverageToDate = (
   data: ActivityTimeSeriesDataPoint[],
-  month: number // 0-based month (0-11)
+  month: number, // 0-based month (0-11)
 ): number => {
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -24,31 +24,34 @@ export const calculateAverageToDate = (
 
   if (dataToDate.length === 0) return 0;
 
-  const sum = dataToDate.reduce((acc, point) => acc + parseInt(point.value, 10), 0);
+  const sum = dataToDate.reduce(
+    (acc, point) => acc + parseInt(point.value, 10),
+    0,
+  );
   return Math.round(sum / dataToDate.length);
 };
 
 export const formatDate = (date: Date): string => {
-  return date.toISOString().split('T')[0]; // This gives us yyyy-MM-dd format
+  return date.toISOString().split("T")[0]; // This gives us yyyy-MM-dd format
 };
 
 export const getFebuaryActivityTimeSeries = (
-  accessToken: string
+  accessToken: string,
 ): Promise<ActivityTimeSeriesDataPoint[]> => {
   return getActivityTimeSeries({
     accessToken,
-    startDate: '2025-02-01',
-    endDate: '2025-02-28',
+    startDate: "2025-02-01",
+    endDate: "2025-02-28",
   });
 };
 
 export const getMarchActivityTimeSeries = (
-  accessToken: string
+  accessToken: string,
 ): Promise<ActivityTimeSeriesDataPoint[]> => {
   return getActivityTimeSeries({
     accessToken,
-    startDate: '2025-03-01',
-    endDate: '2025-03-31',
+    startDate: "2025-03-01",
+    endDate: "2025-03-31",
   });
 };
 
@@ -61,28 +64,28 @@ export const getActivityTimeSeries = async ({
   startDate: string;
   endDate: string;
 }): Promise<ActivityTimeSeriesDataPoint[]> => {
-  const baseUrl = 'https://api.fitbit.com/1';
-  const resourcePath = 'steps';
-  const userId = '-';
+  const baseUrl = "https://api.fitbit.com/1";
+  const resourcePath = "steps";
+  const userId = "-";
   const url = new URL(
-    `${baseUrl}/user/${userId}/activities/${resourcePath}/date/${startDate}/${endDate}.json`
+    `${baseUrl}/user/${userId}/activities/${resourcePath}/date/${startDate}/${endDate}.json`,
   );
 
   try {
     const response = await fetch(url.toString(), {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json',
+        Accept: "application/json",
       },
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch activity time series');
+      throw new Error("Failed to fetch activity time series");
     }
 
     const data = await response.json();
-    return data['activities-steps'] as ActivityTimeSeriesDataPoint[];
+    return data["activities-steps"] as ActivityTimeSeriesDataPoint[];
   } catch (error) {
-    throw new Error('Failed to fetch activity time series');
+    throw new Error("Failed to fetch activity time series");
   }
 };

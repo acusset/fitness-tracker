@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 // import { LogoutButton } from '@/components/auth/login-button';
 // import { LoginButton } from '@/components/auth/logout-button';
 
@@ -56,14 +56,16 @@ export default async function Home({ params }: { params: { user: string } }) {
   //   </main>)
   // }
 
-  if (!user || user === 'undefined') {
+  if (!user || user === "undefined") {
     notFound();
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="mb-8 text-4xl font-bold">Welcome {user}</h1>
-      <p className="mb-4 text-lg">No step data available. Please connect a fitness tracker.</p>
+      <p className="mb-4 text-lg">
+        No step data available. Please connect a fitness tracker.
+      </p>
     </main>
   );
 }

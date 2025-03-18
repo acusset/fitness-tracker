@@ -1,15 +1,15 @@
-import { Settings, Trophy } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { Settings, Trophy } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 // Mock user data - in a real app, this would come from authentication
 const currentUser = {
-  name: 'Jane Doe',
-  email: 'jane.doe@example.com',
-  avatar: '/placeholder.svg?height=32&width=32',
+  name: "Jane Doe",
+  email: "jane.doe@example.com",
+  avatar: "/placeholder.svg?height=32&width=32",
 };
 
 export function TopNavbar() {
@@ -38,12 +38,15 @@ export function TopNavbar() {
 
           <div className="flex">
             <Link
-              href={`/u/${currentUser.name.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/u/${currentUser.name.toLowerCase().replace(/\s+/g, "-")}`}
               className="mr-2"
             >
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                  <AvatarImage
+                    src={currentUser.avatar}
+                    alt={currentUser.name}
+                  />
                   <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
                 </Avatar>
               </Button>

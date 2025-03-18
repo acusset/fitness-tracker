@@ -1,9 +1,19 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 // Define the step data type
 interface StepData {
@@ -30,7 +40,7 @@ export default function DailyStepsChart({
 
   // Sort data by date
   const sortedData = [...filteredData].sort(
-    (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
+    (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime(),
   );
 
   // Transform data for the chart
@@ -45,7 +55,7 @@ export default function DailyStepsChart({
       date: item.dateTime,
       steps,
       percentage,
-      formattedDate: `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}`,
+      formattedDate: `${date.getDate()} ${date.toLocaleString("default", { month: "short" })}`,
     };
   });
 
@@ -54,7 +64,8 @@ export default function DailyStepsChart({
       <CardHeader>
         <CardTitle>Daily Steps</CardTitle>
         <CardDescription>
-          {new Date(year, month).toLocaleString('default', { month: 'long' })} {year}
+          {new Date(year, month).toLocaleString("default", { month: "long" })}{" "}
+          {year}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -62,14 +73,22 @@ export default function DailyStepsChart({
           <ChartContainer
             config={{
               steps: {
-                label: 'Steps',
-                color: 'hsl(var(--chart-1))',
+                label: "Steps",
+                color: "hsl(var(--chart-1))",
               },
             }}
           >
-            <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+            >
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="day" tickLine={false} axisLine={false} tickMargin={8} />
+              <XAxis
+                dataKey="day"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+              />
               <YAxis
                 tickLine={false}
                 axisLine={false}
@@ -89,7 +108,11 @@ export default function DailyStepsChart({
                   />
                 }
               />
-              <Bar dataKey="steps" fill="var(--color-steps)" radius={[4, 4, 0, 0]} />
+              <Bar
+                dataKey="steps"
+                fill="var(--color-steps)"
+                radius={[4, 4, 0, 0]}
+              />
             </BarChart>
           </ChartContainer>
         </div>

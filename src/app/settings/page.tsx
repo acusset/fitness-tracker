@@ -1,5 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Providers from './providers';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Providers from "./providers";
 
 async function SettingsPage() {
   return (
@@ -10,7 +16,9 @@ async function SettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Connected Accounts</CardTitle>
-            <CardDescription>Manage your connected third-party accounts</CardDescription>
+            <CardDescription>
+              Manage your connected third-party accounts
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Providers />
