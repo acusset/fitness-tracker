@@ -1,6 +1,10 @@
 import { auth, providers } from "@/auth";
 import { LoginButton } from "@/components/auth/login-button";
-import { getUserConnectedAccounts } from "@/repositories/user-repository";
+import {
+  getUserConnectedAccounts,
+  NotFoundError,
+} from "@/repositories/user-repository";
+import { Account } from "@/types/account";
 import { Suspense, use } from "react";
 
 /**
@@ -16,9 +20,17 @@ export async function getUserAccounts() {
     throw new Error("Not authenticated");
   }
 
-  const accounts = await getUserConnectedAccounts(session.user.id);
-
-  return { accounts };
+  try {
+    const accounts = await getUserConnectedAccounts(session.user.id);
+    return { accounts };
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      // Return empty accounts array for the not found case
+      return { accounts: [] as Account[] };
+    }
+    // Re-throw any other errors
+    throw error;
+  }
 }
 
 export default function Providers() {
@@ -27,6 +39,7 @@ export default function Providers() {
   const providersMap = providers.map((provider) => {
     if (typeof provider === "function") {
       const providerData = provider({});
+      console.log(providerData);
       return {
         id: providerData.id,
         name: providerData.name,
@@ -57,15 +70,13 @@ export default function Providers() {
             <p className="font-medium">{provider.name}</p>
             <p className="font-medium">
               {accounts.find(
-                (account: { provider: string }) =>
-                  account.provider === provider.slug,
+                (account: Account) => account.provider === provider.slug,
               )
                 ? "Connected"
                 : "Not connected"}
             </p>
             {accounts.find(
-              (account: { provider: string }) =>
-                account.provider === provider.slug,
+              (account: Account) => account.provider === provider.slug,
             ) && <LoginButton provider={provider.slug}>Connect</LoginButton>}
           </div>
         ))}

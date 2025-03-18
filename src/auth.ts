@@ -1,7 +1,6 @@
 import Google from "@auth/core/providers/google";
 import { SupabaseAdapter } from "@auth/supabase-adapter";
-import jwt from "jsonwebtoken";
-import NextAuth, { Session, User } from "next-auth";
+import NextAuth from "next-auth";
 import Strava from "next-auth/providers/strava";
 import Fitbit from "./lib/fitbit/provider";
 

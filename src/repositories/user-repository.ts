@@ -1,4 +1,5 @@
 import { supabase } from "@/supabase";
+import { Account } from "@/types/account";
 
 /**
  * Custom error class for representing "not found" scenarios
@@ -17,7 +18,9 @@ export class NotFoundError extends Error {
  * @throws NotFoundError If no accounts are found for the user
  * @throws Error If there is an error fetching the accounts
  */
-export async function getUserConnectedAccounts(userId: string) {
+export async function getUserConnectedAccounts(
+  userId: string,
+): Promise<Account[]> {
   const { data, error } = await supabase
     .from("accounts")
     .select("*")
@@ -31,5 +34,5 @@ export async function getUserConnectedAccounts(userId: string) {
     throw new NotFoundError(`No connected accounts found for user: ${userId}`);
   }
 
-  return data;
+  return data as Account[];
 }

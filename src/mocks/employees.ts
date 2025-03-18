@@ -1,4 +1,4 @@
-import { REWARD_TIERS } from "@/types";
+import { REWARD_TIERS } from "@/types/common";
 
 export const employees = [
   {

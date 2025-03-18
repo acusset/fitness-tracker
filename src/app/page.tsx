@@ -36,7 +36,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { employees } from "@/mocks/employees";
-import { ACTIVITY_TYPES, DISPLAY_MODES } from "@/types";
+import { ACTIVITY_TYPES, DISPLAY_MODES } from "@/types/common";
 
 // Get current date info for calculations
 const currentDate = new Date();
