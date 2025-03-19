@@ -1,3 +1,5 @@
+import { providersMap } from "@/auth";
+import { LoginButton } from "@/components/auth/login-button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,8 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CircleXIcon } from "lucide-react";
 import { Suspense } from "react";
-import Providers, { providersMap } from "./providers";
+import { ErrorBoundary } from "react-error-boundary";
+import Providers from "./providers";
 
 async function SettingsPage() {
   return (
@@ -24,10 +28,12 @@ async function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex flex-col gap-4">
-              <p>Manage your providers</p>
-              <Suspense fallback={<ProvidersLoader />}>
-                <Providers />
-              </Suspense>
+              <p>Manage your accounts</p>
+              <ErrorBoundary fallback={<ProvidersError />}>
+                <Suspense fallback={<ProvidersLoader />}>
+                  <Providers />
+                </Suspense>
+              </ErrorBoundary>
             </div>
           </CardContent>
         </Card>
@@ -54,4 +60,25 @@ const ProvidersLoader = () => (
   </>
 );
 
+const ProvidersError = () => (
+  <>
+    <p>Something went wrong while loading your accounts</p>
+
+    {providersMap.map((provider) => (
+      <div
+        key={provider.id}
+        className="flex items-center justify-between gap-6 rounded-lg border p-4"
+      >
+        <CircleXIcon
+          className="h-5 w-5 text-amber-600 dark:text-amber-500"
+          aria-label="Not connected"
+          data-testid="not-connected-icon"
+        />
+        <p className="font-medium">{provider.name}</p>
+        <div className="flex-grow"></div>
+        <LoginButton provider={provider.slug}>Link</LoginButton>
+      </div>
+    ))}
+  </>
+);
 export default SettingsPage;

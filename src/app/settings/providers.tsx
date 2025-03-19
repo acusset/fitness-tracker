@@ -1,27 +1,10 @@
-import { auth, providers } from "@/auth";
+import { auth, providersMap } from "@/auth";
 import { LoginButton } from "@/components/auth/login-button";
+import { LogoutButton } from "@/components/auth/logout-button";
 import { getUserConnectedAccounts } from "@/repositories/user-repository";
 import { Account } from "@/types/account";
 import { CheckCircleIcon, CircleXIcon } from "lucide-react";
 import { use } from "react";
-
-export const providersMap = providers.map((provider) => {
-  if (typeof provider === "function") {
-    const providerData = provider({});
-
-    return {
-      id: providerData.id,
-      name: providerData.name,
-      slug: providerData.name.toLowerCase().replace(" ", "-"),
-    };
-  } else {
-    return {
-      id: provider.id,
-      name: provider.name,
-      slug: provider.name.toLowerCase().replace(" ", "-"),
-    };
-  }
-});
 
 /**
  * Get the accounts for the current user
@@ -82,7 +65,7 @@ export default function Providers() {
             <p className="font-medium">{provider.name}</p>
             <div className="flex-grow"></div>
             {connected ? (
-              <LoginButton provider={provider.slug}>Unlink</LoginButton>
+              <LogoutButton>Unlink</LogoutButton>
             ) : (
               <LoginButton provider={provider.slug}>Link</LoginButton>
             )}

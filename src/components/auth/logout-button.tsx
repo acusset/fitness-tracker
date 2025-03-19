@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut } from "@/auth";
+import { signOut } from "next-auth/react";
 import { ReactNode } from "react";
 import { Button } from "../ui/button";
 
@@ -9,7 +9,15 @@ interface LogoutButtonProps {
 }
 
 export const LogoutButton = ({ children }: LogoutButtonProps) => (
-  <Button className="bg-red-500" onClick={() => signOut()} type="button">
+  <Button
+    className="bg-red-500"
+    onClick={() =>
+      signOut({
+        redirectTo: "/",
+      })
+    }
+    type="button"
+  >
     {children}
   </Button>
 );
