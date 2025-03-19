@@ -52,7 +52,6 @@ async function getStepsForDateRange(
 
     return steps;
   } catch (error) {
-    console.error("Error retrieving step data:", error);
     throw error;
   }
 }

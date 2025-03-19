@@ -4,6 +4,9 @@ import NextAuth from "next-auth";
 import Strava from "next-auth/providers/strava";
 import Fitbit from "./lib/fitbit/provider";
 
+/**
+ * The providers that are available to the application
+ */
 export const providers = [
   Fitbit,
   Strava({
@@ -21,6 +24,31 @@ export const providers = [
     },
   }),
 ];
+
+// create a return type for the providers
+export type Provider = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+// Used to expose the providers in a way that can be used in the UI
+export const providersMap = providers.map((provider): Provider => {
+  if (typeof provider === "function") {
+    const providerData = provider({});
+    return {
+      id: providerData.id,
+      name: providerData.name,
+      slug: providerData.name.toLowerCase().replace(" ", "-"),
+    };
+  } else {
+    return {
+      id: provider.id,
+      name: provider.name,
+      slug: provider.name.toLowerCase().replace(" ", "-"),
+    };
+  }
+});
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: process.env.DEBUG === "true",

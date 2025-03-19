@@ -1,11 +1,27 @@
 import { auth, providers } from "@/auth";
 import { LoginButton } from "@/components/auth/login-button";
-import {
-  getUserConnectedAccounts,
-  NotFoundError,
-} from "@/repositories/user-repository";
+import { getUserConnectedAccounts } from "@/repositories/user-repository";
 import { Account } from "@/types/account";
-import { Suspense, use } from "react";
+import { CheckCircleIcon, CircleXIcon } from "lucide-react";
+import { use } from "react";
+
+export const providersMap = providers.map((provider) => {
+  if (typeof provider === "function") {
+    const providerData = provider({});
+
+    return {
+      id: providerData.id,
+      name: providerData.name,
+      slug: providerData.name.toLowerCase().replace(" ", "-"),
+    };
+  } else {
+    return {
+      id: provider.id,
+      name: provider.name,
+      slug: provider.name.toLowerCase().replace(" ", "-"),
+    };
+  }
+});
 
 /**
  * Get the accounts for the current user
@@ -24,11 +40,8 @@ export async function getUserAccounts() {
     const accounts = await getUserConnectedAccounts(session.user.id);
     return { accounts };
   } catch (error) {
-    if (error instanceof NotFoundError) {
-      // Return empty accounts array for the not found case
-      return { accounts: [] as Account[] };
-    }
-    // Re-throw any other errors
+    // log and re-throw any other errors
+    console.error(error);
     throw error;
   }
 }
@@ -36,51 +49,46 @@ export async function getUserAccounts() {
 export default function Providers() {
   const { accounts } = use(getUserAccounts());
 
-  const providersMap = providers.map((provider) => {
-    if (typeof provider === "function") {
-      const providerData = provider({});
-      console.log(providerData);
-      return {
-        id: providerData.id,
-        name: providerData.name,
-        slug: providerData.name.toLowerCase().replace(" ", "-"),
-      };
-    } else {
-      return {
-        id: provider.id,
-        name: provider.name,
-        slug: provider.name.toLowerCase().replace(" ", "-"),
-      };
-    }
-  });
+  // Helper function to check if a provider is connected
+  const isProviderConnected = (providerSlug: string): boolean => {
+    return accounts.some(
+      (account: Account) => account.provider === providerSlug,
+    );
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      <Suspense fallback={<p>Loading...</p>}>
-        {accounts ? (
-          <p>Manage your providers</p>
-        ) : (
-          <p>Please sign in to manage your providers</p>
-        )}
-        {providersMap.map((provider) => (
+    <>
+      {providersMap.map((provider) => {
+        const connected = isProviderConnected(provider.slug);
+
+        return (
           <div
             key={provider.id}
             className="flex items-center justify-between gap-6 rounded-lg border p-4"
           >
+            {connected ? (
+              <CheckCircleIcon
+                className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                aria-label="Connected"
+                data-testid="connected-icon"
+              />
+            ) : (
+              <CircleXIcon
+                className="h-5 w-5 text-amber-600 dark:text-amber-500"
+                aria-label="Not connected"
+                data-testid="not-connected-icon"
+              />
+            )}
             <p className="font-medium">{provider.name}</p>
-            <p className="font-medium">
-              {accounts.find(
-                (account: Account) => account.provider === provider.slug,
-              )
-                ? "Connected"
-                : "Not connected"}
-            </p>
-            {accounts.find(
-              (account: Account) => account.provider === provider.slug,
-            ) && <LoginButton provider={provider.slug}>Connect</LoginButton>}
+            <div className="flex-grow"></div>
+            {connected ? (
+              <LoginButton provider={provider.slug}>Unlink</LoginButton>
+            ) : (
+              <LoginButton provider={provider.slug}>Link</LoginButton>
+            )}
           </div>
-        ))}
-      </Suspense>
-    </div>
+        );
+      })}
+    </>
   );
 }

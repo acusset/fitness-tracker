@@ -101,7 +101,6 @@ export const getActivityTimeSeries = async ({
     // Convert to daily step counts
     return aggregateActivitiesByDate(walkingActivities);
   } catch (error) {
-    console.error("Error fetching Strava activities:", error);
     throw new Error("Failed to fetch activity time series from Strava");
   }
 };
