@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 // Mock user data - in a real app, this would come from authentication
 const currentUser = {
@@ -35,6 +36,10 @@ export function TopNavbar() {
               <span className="sr-only">Settings</span>
             </Button>
           </Link>
+
+          <div className="mr-2">
+            <ThemeToggle />
+          </div>
 
           <div className="flex">
             <Link

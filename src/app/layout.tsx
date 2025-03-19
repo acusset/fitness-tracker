@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import { TopNavbar } from "@/components/top-navbar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,14 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <div className="relative flex min-h-screen flex-col">
-          <TopNavbar />
-          <div className="container mx-auto py-4">
-            <main className="flex-1">{children}</main>
+        <ThemeProvider>
+          <div className="relative flex min-h-screen flex-col bg-background text-foreground">
+            <TopNavbar />
+            <div className="container mx-auto py-4">
+              <main className="flex-1">{children}</main>
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );
