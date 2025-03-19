@@ -1,14 +1,15 @@
 import Google from "@auth/core/providers/google";
+import MicrosoftEntraID from "@auth/core/providers/microsoft-entra-id";
+import Strava from "@auth/core/providers/strava";
 import { SupabaseAdapter } from "@auth/supabase-adapter";
 import NextAuth from "next-auth";
-import Strava from "next-auth/providers/strava";
 import Fitbit from "./lib/fitbit/fitbitProvider";
-
 /**
  * The providers that are available to the application
  */
 export const providers = [
   Fitbit,
+  MicrosoftEntraID,
   Strava({
     authorization: {
       params: {
