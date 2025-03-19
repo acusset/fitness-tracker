@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase";
 import { Account } from "@/types/account";
+
 /**
  * Custom error class for representing "not found" scenarios
  */

@@ -1,7 +1,7 @@
 import { auth, providersMap } from "@/auth";
 import { LoginButton } from "@/components/auth/login-button";
 import { LogoutButton } from "@/components/auth/logout-button";
-import { getUserConnectedAccounts } from "@/repositories/user-repository";
+import { getUserConnectedAccounts } from "@/repositories/user";
 import { Account } from "@/types/account";
 import { CheckCircleIcon, CircleXIcon } from "lucide-react";
 import { use } from "react";
